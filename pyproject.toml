@@ -1,0 +1,27 @@
+[project]
+name = "blackgroundlog"
+version = "0.1.0"
+description = "A logging handler wrapper to improve logging performace by sending writes to a background thread"
+requires-python = ">=3.10"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "coverage>=7.9.2",
+    "flake8>=7.3.0",
+    "isort>=6.0.1",
+    "mypy>=1.16.1",
+]
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+python_version = "3.13"
+disallow_any_unimported = true
+disallow_any_expr = false
+disallow_any_decorated = true
+disallow_any_explicit = true
+disallow_any_generics = true
+disallow_subclassing_any = true
