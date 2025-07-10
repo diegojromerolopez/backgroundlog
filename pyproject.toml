@@ -1,6 +1,6 @@
 [project]
 name = "backgroundlog"
-version = "0.2.2"
+version = "0.2.3"
 description = "A logging handler wrapper to improve logging performace by sending writes to a background thread"
 readme = "README.md"
 keywords = [ "logging", "log", "thread", "threading", "non-blocking" ]

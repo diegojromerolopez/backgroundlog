@@ -109,13 +109,13 @@ a full catalog of the performance tests we run.
 All tests are 100_000 iterations of creating the same logging message,
 and were run with Python 3.13.5 in a Macbook Pro M1 with 16 GB of RAM:
 
-| Logging Handler               | Spent Time     |              | vs. Baseline |
-|-------------------------------|----------------|--------------|--------------|
-|                               | Mean Time (ms) | Std Dev (ms) |              |
-| StreamHandler                 | 0.687          | 0.006        | baseline     |
-| FileHandler                   | 0.687          | 0.007        | -0.067%      |
-| ThreadHandler (StreamHandler) | 0.477          | 0.003        | -30.646%     |
-| ThreadHandler (FileHandler)   | 0.475          | 0.001        | -30.865%     |
+| Logging Handler               | Spent Time    |             | vs. Baseline |
+|-------------------------------|---------------|-------------|--------------|
+|                               | Mean Time (s) | Std Dev (s) |              |
+| StreamHandler                 | 0.687         | 0.006       | baseline     |
+| FileHandler                   | 0.687         | 0.007       | -0.067%      |
+| ThreadHandler (StreamHandler) | 0.477         | 0.003       | -30.646%     |
+| ThreadHandler (FileHandler)   | 0.475         | 0.001       | -30.865%     |
 
 As you see there is a ~30% of improvement when running the thread handler.
 It is not much, but in some contexts it can be useful for sure.
