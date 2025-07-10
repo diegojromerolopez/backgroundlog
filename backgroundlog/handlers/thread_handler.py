@@ -30,6 +30,10 @@ class ThreadHandler(Handler):
         self.__feeder.start()
         atexit.register(self.__close)
 
+    @property
+    def wrapped_handler(self) -> Handler:
+        return self.__wrapped_handler
+
     def emit(self, record: LogRecord) -> None:
         if record.levelno in self.__blocking_levels:
             self.__blocking_queue_put(record=record)

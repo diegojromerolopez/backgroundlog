@@ -74,6 +74,7 @@ thread_handler = ThreadHandler(file_handler, blocking_levels={INFO, ERROR, CRITI
 ##### Only error and critical records are blocking
 
 ```python
+from backgroundlog.handlers.thread_handler import ThreadHandler
 from logging import CRITICAL, ERROR
 
 thread_handler = ThreadHandler(file_handler, blocking_levels={ERROR, CRITICAL})
@@ -82,6 +83,7 @@ thread_handler = ThreadHandler(file_handler, blocking_levels={ERROR, CRITICAL})
 ##### Only critical records are blocking
 
 ```python
+from backgroundlog.handlers.thread_handler import ThreadHandler
 from logging import CRITICAL
 
 thread_handler = ThreadHandler(file_handler, blocking_levels={CRITICAL})
@@ -90,7 +92,9 @@ thread_handler = ThreadHandler(file_handler, blocking_levels={CRITICAL})
 ##### No records are blocking
 
 ```python
-thread_handler = ThreadHandler(file_handler, blocking_levels={})
+from backgroundlog.handlers.thread_handler import ThreadHandler
+
+thread_handler = ThreadHandler(file_handler, blocking_levels=None)
 ```
 
 By default, the error and critical records are blocking, the rest are not.
@@ -105,14 +109,15 @@ a full catalog of the performance tests we run.
 All tests are 100_000 iterations of creating the same logging message,
 and were run with Python 3.13.5 in a Macbook Pro M1 with 16 GB of RAM:
 
-|        Logging handler        |     Spent Time      |
-|:-----------------------------:|:-------------------:|
-|  StreamHandler (file-based)   | 0.6909148693084717  |
-|          FileHandler          | 0.6867997646331787  |
-| ThreadHandler (StreamHandler) | 0.4722108840942383  |
-|  ThreadHandler (FileHandler)  | 0.47147083282470703 |
+| Logging Handler               | Spent Time     |              | vs. Baseline |
+|-------------------------------|----------------|--------------|--------------|
+|                               | Mean Time (ms) | Std Dev (ms) |              |
+| StreamHandler                 | 0.687          | 0.006        | baseline     |
+| FileHandler                   | 0.687          | 0.007        | -0.067%      |
+| ThreadHandler (StreamHandler) | 0.477          | 0.003        | -30.646%     |
+| ThreadHandler (FileHandler)   | 0.475          | 0.001        | -30.865%     |
 
-As you see there is a ~40% of improvement when running the thread handler.
+As you see there is a ~30% of improvement when running the thread handler.
 It is not much, but in some contexts it can be useful for sure.
 
 ## Dependencies
