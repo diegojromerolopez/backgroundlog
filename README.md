@@ -1,4 +1,4 @@
-# blackgroundlog
+# backgroundlog
 Thread-based log handler for better performance
 
 ![test](https://github.com/diegojromerolopez/backgroundlog/actions/workflows/test.yml/badge.svg)

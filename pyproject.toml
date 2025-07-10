@@ -1,6 +1,6 @@
 [project]
-name = "blackgroundlog"
-version = "0.1.1"
+name = "backgroundlog"
+version = "0.2.0"
 description = "A logging handler wrapper to improve logging performace by sending writes to a background thread"
 requires-python = ">=3.10"
 dependencies = []
