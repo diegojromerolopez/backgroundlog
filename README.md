@@ -106,19 +106,41 @@ See the file
 [run_performance_comparison.py](/backgroundlog/performance/run_performance_comparison.py) for
 a full catalog of the performance tests we run.
 
+We used two versions of Python depending on if they had or not the global interpret lock:
+- Python 3.15.3 (with GIL)
+- Python 3.15.3t (without GIL)
+
 All tests are 100_000 iterations of creating the same logging message,
-and were run with Python 3.13.5 in a Macbook Pro M1 with 16 GB of RAM:
+and were run in a Macbook Pro M1 with 16 GB of RAM.
 
-| Logging Handler               | Spent Time    |             | vs. Baseline |
-|-------------------------------|---------------|-------------|--------------|
-|                               | Mean Time (s) | Std Dev (s) |              |
-| StreamHandler                 | 0.687         | 0.006       | baseline     |
-| FileHandler                   | 0.687         | 0.007       | -0.067%      |
-| ThreadHandler (StreamHandler) | 0.477         | 0.003       | -30.646%     |
-| ThreadHandler (FileHandler)   | 0.475         | 0.001       | -30.865%     |
+### Python 3.15.3 (with GIL)
 
-As you see there is a ~30% of improvement when running the thread handler.
-It is not much, but in some contexts it can be useful for sure.
+| Logging Handler               | Spent Time     |              | vs. Baseline |
+|-------------------------------|----------------|--------------|--------------|
+|                               | Mean Time (ms) | Std Dev (ms) |              |
+| StreamHandler                 | 0.685          | 0.006        | baseline     |
+| FileHandler                   | 0.685          | 0.018        | +0.03%       |
+| ThreadHandler (StreamHandler) | 0.487          | 0.03         | -28.911%     |
+| ThreadHandler (FileHandler)   | 0.475          | 0.002        | -30.66%      |
+
+There is a ~30% of improvement when running the thread handler.
+
+### Python 3.15.3t (without GIL)
+
+| Logging Handler               | Spent Time     |              | vs. Baseline |
+|-------------------------------|----------------|--------------|--------------|
+|                               | Mean Time (ms) | Std Dev (ms) |              |
+| StreamHandler                 | 0.539          | 0.004        | baseline     |
+| FileHandler                   | 0.545          | 0.013        | +1.109%      |
+| ThreadHandler (StreamHandler) | 0.344          | 0.002        | -36.301%     |
+| ThreadHandler (FileHandler)   | 0.339          | 0.001        | -37.118%     |
+
+There is a ~36% of improvement when running the thread handler. +6% with respect of the
+Python version with GIL.
+
+### Conclusions
+Not blocking the main flow of your program by making use of backgroundlog
+gives you a 30% speed gain.
 
 ## Dependencies
 This package has no dependencies.
