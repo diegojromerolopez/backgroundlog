@@ -1,6 +1,6 @@
 [project]
 name = "backgroundlog"
-version = "0.2.3"
+version = "0.2.4"
 description = "A logging handler wrapper to improve logging performace by sending writes to a background thread"
 readme = "README.md"
 keywords = [ "logging", "log", "thread", "threading", "non-blocking" ]
@@ -31,9 +31,18 @@ dev = [
     "black>=25.1.0",
     "coverage>=7.9.2",
     "flake8>=7.3.0",
+    "flake8-quotes>=3.4.0",
     "isort>=6.0.1",
     "mypy>=1.16.1",
 ]
+
+[tool.black]
+skip_string_normalization = true
+
+[tool.flake8]
+inline-quotes = "'"
+multiline-quotes = "'''"
+docstring-quotes = '"""'
 
 [tool.isort]
 profile = "black"
