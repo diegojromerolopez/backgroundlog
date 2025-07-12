@@ -7,18 +7,18 @@ from time import time
 from backgroundlog.handlers.thread_handler import ThreadHandler
 
 DIR_PATH = Path(__file__).parent
-LOGGING_FILE_HANDLER_FILE_PATH = DIR_PATH / "test_file_handler.log"
-LOGGING_STREAM_HANDLER_FILE_PATH = DIR_PATH / "test_stream_handler.log"
+LOGGING_FILE_HANDLER_FILE_PATH = DIR_PATH / 'test_file_handler.log'
+LOGGING_STREAM_HANDLER_FILE_PATH = DIR_PATH / 'test_stream_handler.log'
 
 
 def main() -> None:
     stream_handler = logging.StreamHandler(
-        LOGGING_STREAM_HANDLER_FILE_PATH.open("w"),
+        LOGGING_STREAM_HANDLER_FILE_PATH.open('w'),
     )
     file_handler = logging.FileHandler(
         LOGGING_FILE_HANDLER_FILE_PATH,
-        mode="a",
-        encoding="utf-8",
+        mode='a',
+        encoding='utf-8',
     )
     thread_handler_stream_handler = ThreadHandler(stream_handler)
     thread_handler_file_handler = ThreadHandler(file_handler)
@@ -46,20 +46,20 @@ def main() -> None:
 
     baseline_mean = results[0][1]
 
-    table_rows = ""
+    table_rows = ''
     for result in results:
         delta = 100.0 * (result[1] - baseline_mean) / baseline_mean
         if delta == 0.0:
-            delta_str = "baseline"
+            delta_str = 'baseline'
         else:
             sign = __sign(delta)
-            delta_str = f"{sign}{abs(round(delta, 3))}%"
+            delta_str = f'{sign}{abs(round(delta, 3))}%'
 
         table_rows += (
-            f"|  {result[0]} | "
-            f"{round(result[1], 3)} | "
-            f"{round(result[2], 3)} | "
-            f"{delta_str} |\n"
+            f'|  {result[0]} | '
+            f'{round(result[1], 3)} | '
+            f'{round(result[2], 3)} | '
+            f'{delta_str} |\n'
         )
 
     table = f"""
@@ -79,7 +79,7 @@ def __run_performance_test(
     iterations: int = 100_000,
     loops: int = 5,
 ) -> tuple[float, float]:
-    logger = logging.getLogger(f"logger{uuid.uuid4()}")
+    logger = logging.getLogger(f'logger{uuid.uuid4()}')
     logger.setLevel(logging.INFO)
     logger.handlers = []
     logger.addHandler(handler)
@@ -88,7 +88,7 @@ def __run_performance_test(
     for _ in range(0, loops):
         start_time = time()
         for log_index in range(iterations):
-            logger.info("Test message")
+            logger.info('Test message')
         spent_times.append(time() - start_time)
 
     avg_spent_times = statistics.mean(spent_times)
@@ -99,10 +99,10 @@ def __run_performance_test(
 
 def __sign(value: float) -> str:
     if value < 0:
-        return "-"
+        return '-'
     if value > 0:
-        return "+"
-    return ""
+        return '+'
+    return ''
 
 
 def __cleanup() -> None:
@@ -110,5 +110,5 @@ def __cleanup() -> None:
     LOGGING_STREAM_HANDLER_FILE_PATH.unlink()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
